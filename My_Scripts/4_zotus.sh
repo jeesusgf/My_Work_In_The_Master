@@ -29,7 +29,7 @@ mkdir Resultados
 
 ### 6 - Export data to a tsv
 
-awk '{ print $1"\t"$2 }' taxonomy_recognition.outfm6 > Tabla_especies.tsv
+awk '{ print $1"\t"$2 }' taxonomy_recognition.outfm6 > Resultados/Tabla_especies.tsv
 
 ### 7 - Blast no-matched with syntax database
 
