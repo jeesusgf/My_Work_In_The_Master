@@ -7,6 +7,17 @@ mkdir Merged
 
 ~/usearch -fastq_mergepairs Muestras_filtradas/*R1* -maxdiffs 5 -fastqout Merged/merged.fastq
 
+----------------
+
+### 1.5 - If samples are single-end, to join all of them into a single file
+
+## for file in Muestras_filtradas/.fastq
+## do
+## cat $file >> merged.fastq
+## done
+
+----------------
+
 ### 2 - Create the report
 
 ~/usearch -fastx_info Merged/merged.fastq -output Merged/Stats_merge.txt
