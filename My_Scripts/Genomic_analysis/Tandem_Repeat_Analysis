@@ -1,0 +1,16 @@
+
+### 1 - Find the TR sequences in a sample's genome
+~/GangSTR/build/GangSTR --bam samples/[Sample_file].bam --ref reference_genome/[Reference_genome].fasta --regions reference_genome/[Regions_Of_Interest].bed --out [Output_name]
+
+### 2 - Convert VCF file to BED file
+cat [Sample_file].vcf | grep -v "#" | tr "=" "\t" | tr ";" "\t" | awk '{ print $1"\t"$2"\t"$9"\t"$11 }' > [Sample_ID]_tr_positions.bed
+
+### Add 'chr' to the first columns
+perl -pi -e 's/^/chr/g' [Sample_ID]_tr_positions.bed
+
+### 3 - Convert reference genome GFF file to BED file
+#### In my case, I'm interest in coding regions, that's why I only extract info of exons.
+cat [Reference_Genome].gff3 | grep -v "#" | tr ";" "\t" | grep "protein_coding" |  awk '{ if($2 == "exon") { print $1"\t"$3-1"\t"$4"\t"$5"\t"$7 }}' > Exons.bed
+
+### 4 - Find overlapping regions                                                                                                                                                                                                                                                                                                                
+~/bedtools intersect -a [Sample_ID]_tr_positions.bed -b Exons.bed -wb > Genes_overlapped.bed
