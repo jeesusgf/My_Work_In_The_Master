@@ -1,11 +1,15 @@
+--------------------
+## This script is used to predict and analyze Tandem Repeats.
+--------------------
 
-### 1 - Find the TR sequences in a sample's genome
-~/GangSTR/build/GangSTR --bam samples/[Sample_file].bam --ref reference_genome/[Reference_genome].fasta --regions reference_genome/[Regions_Of_Interest].bed --out [Output_name]
+### 1 - Predict the TR sequences in a sample's genome
+~/GangSTR --bam samples/[Sample_file].bam --ref reference_genome/[Reference_genome].fasta --regions reference_genome/[Regions_Of_Interest].bed --out [Output_name]
 
 ### 2 - Convert VCF file to BED file
-cat [Sample_file].vcf | grep -v "#" | tr "=" "\t" | tr ";" "\t" | awk '{ print $1"\t"$2"\t"$9"\t"$11 }' > [Sample_ID]_tr_positions.bed
+### We are interested to take (in this order): chromosome, beggining of TR sequence, end of TR sequence, TR motif, number of repetitions of TR
+cat [Sample_file].vcf | grep -v "#" | tr "=" "\t" | tr ";" "\t" | awk '{ print $1"\t"$2"\t"$9"\t"$11"\t"$12 }' > [Sample_ID]_tr_positions.bed
 
-### Add 'chr' to the first columns
+### Add 'chr' to the first column
 perl -pi -e 's/^/chr/g' [Sample_ID]_tr_positions.bed
 
 ### 3 - Convert reference genome GFF file to BED file
