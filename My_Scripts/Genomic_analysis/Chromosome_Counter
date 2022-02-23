@@ -1,0 +1,16 @@
+--------------------
+## This script is used to count the number of entries in each chromosome. In my case, I use it to count the number of tandem repeats present in each chromosome.
+## Please, note that chromosomes are named as chr in the first column.
+--------------------
+
+## To count chromosomes 1 to 22.
+for i in {1..22}
+do
+cat [file] | awk '{ if($1 == "chr"'$i') { print $1"\t"$2 }}' | wc -l
+done
+
+## To count chromosomes X and Y
+for x in X Y
+do
+cat [file] | grep "chr"$x | wc -l
+done
