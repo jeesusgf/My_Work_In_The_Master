@@ -1,8 +1,7 @@
 
 ### 1 - Curing of samples 
 
-cd ../Caso1
-
+cd ../[Data_Folder]
 mkdir Muestras_filtradas
 
 for file in Muestras/*.fastq
@@ -15,10 +14,12 @@ rm fastp*
 ### 2 - QC of cured samples
 
 mkdir QC_filtradas
+mkdir QC_filtradas/Report
 
 for file in Muestras_filtradas/*.fastq
 do
 fastqc $file -o QC_filtradas/
 done
 
-rm QC_filtradas/*.zip
+multiqc QC_filtradas/ -o QC_filtradas/Report/
+rm QC_filtradas/Report/multiqc_data/
