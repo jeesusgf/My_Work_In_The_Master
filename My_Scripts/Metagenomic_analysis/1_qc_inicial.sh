@@ -5,7 +5,7 @@
 cd ../[Data_Folder]
 mkdir QC
 
-for file in Muestras/*.fastq
+for file in [Data_Folder]/*.fastq
 do
 fastqc $file -o QC/
 done
